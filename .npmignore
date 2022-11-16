@@ -1,0 +1,8 @@
+node_modules/
+src/
+.gitignore
+.tool-versions
+yarn.lock
+
+#editor settings
+.editorconfig

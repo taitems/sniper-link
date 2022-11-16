@@ -1,0 +1,24 @@
+{
+  "name": "sniper-link",
+  "version": "0.0.1",
+  "description": "Create sniper-links to deep link users to emails",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "build": "esbuild src/index.js --minify --sourcemap --target=chrome58,firefox57,safari11,edge16 --outfile=dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taitems/sniper-link.git"
+  },
+  "author": "Tait Brown <taitbrown@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/taitems/sniper-link/issues"
+  },
+  "homepage": "https://github.com/taitems/sniper-link#readme",
+  "dependencies": {
+    "esbuild": "^0.15.14",
+    "jest": "^29.3.1"
+  }
+}
