@@ -1,6 +1,6 @@
 {
   "name": "sniper-link",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Create sniper-links to deep link users to emails",
   "main": "index.js",
   "scripts": {
