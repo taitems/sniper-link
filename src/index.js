@@ -1,10 +1,8 @@
-const buildUrl = require("./buildUrl")
+const buildUrl = require('./buildUrl');
 
 const sniperLink = ({
-    email,
-    from
-}) => {
-    return buildUrl({ email, from })
-}
+  email,
+  from,
+}) => buildUrl({ email, from });
 
-module.exports = sniperLink
+module.exports = sniperLink;
