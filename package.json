@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --coverage",
-    "build": "esbuild src/index.js --minify --sourcemap --target=chrome58,firefox57,safari11,edge16 --outfile=dist/index.js"
+    "build": "npm run build:iife && npm run build:esm && npm run build:node",
+    "build:iife": "esbuild src/index.js --minify --bundle --target=chrome58,firefox57,safari11,edge18 --outfile=dist/web/iife.js",
+    "build:esm": "esbuild src/index.js --minify --bundle --target=chrome58,firefox57,safari11,edge18 --format=esm --outfile=dist/web/esm.js",
+    "build:node": "esbuild src/*.js --platform=node --target=node10.4 --outdir=dist/node"
   },
   "repository": {
     "type": "git",
