@@ -12,13 +12,13 @@ What is a [sniper link](https://growth.design/sniper-link)? Let **growth.design*
 
 ### Feature Support Table
 
-|               | Gmail | Outlook | Yahoo | Proton | iCloud |
-|---------------|-------|---------|-------|--------|--------|
-| Account scope | ✅    | ✅       |       |        |        |
-| From filter   | ✅    |         | ✅     | ✅       |        |
-| Spam piercer  | ✅    |         | ✅     | ✅       |        |
-| Time frame (days)   | *️⃣    |         | *️⃣     | ✅       |        |
-| Time frame (hours)   | *️⃣    |         |       | *️⃣       |        |
+|                      | Gmail | Outlook | Yahoo | Proton | iCloud |
+|----------------------|-------|---------|-------|--------|--------|
+| Account scope        | ✅    | ✅       |       |        |        |
+| From filter          | ✅    |         | ✅     | ✅     |        |
+| Spam piercer         | ✅    |         | ✅     | ✅     |        |
+| Time frame (days)    | *️⃣    |         | *️⃣     | *️⃣     |        |
+| Time frame (hours)   | *️⃣    |         |       | *️⃣      |        |
 
 Legend:
 
