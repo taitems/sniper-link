@@ -9,6 +9,8 @@ test('Main formats', () => {
   expect(emailToProvider('hello@live.com')).toBe('microsoft');
   expect(emailToProvider('hello@outlook.com')).toBe('microsoft');
   expect(emailToProvider('hello@icloud.com')).toBe('icloud');
+  expect(emailToProvider('hello@proton.me')).toBe('proton');
+  expect(emailToProvider('hello@protonmail.com')).toBe('proton');
 });
 test('Legacy formats', () => {
   expect(emailToProvider('hello@yahoo.co.uk')).toBe('yahoo');

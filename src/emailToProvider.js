@@ -7,6 +7,8 @@ const emailToProvider = (email) => {
     return 'yahoo';
   } else if (email.match(/@(outlook|live|hotmail|msn|passport).com/) || email.match('@passport.net')) {
     return 'microsoft';
+  } else if (email.match('@proton.me') || email.match('@protonmail.com')) {
+    return 'proton';
   } else if (email.match('@icloud.com')) {
     return 'icloud';
   } else {
