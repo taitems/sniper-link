@@ -2,9 +2,7 @@ const buildDate = require('./buildDate');
 
 describe('buildDate', () => {
   beforeAll(() => {
-    jest
-      .useFakeTimers('modern')
-      .setSystemTime(new Date('2020-01-31T00:00:00.000+00:00'));
+    jest.useFakeTimers('modern').setSystemTime(new Date('2020-01-31T00:00:00.000+00:00'));
   });
   test('gmail', () => {
     expect(buildDate('google', 1)).toBe('+newer_than:1d');
@@ -16,6 +14,6 @@ describe('buildDate', () => {
   });
 
   test('proton', () => {
-    expect(buildDate('proton', 9)).toBe('&begin=1579611600');
+    expect(buildDate('proton', 9)).toBe('&begin=1579651200');
   });
 });

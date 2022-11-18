@@ -4,8 +4,8 @@
   "description": "Create sniper-links to deep link users to emails",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage",
-    "test:ci": "jest",
+    "test": "TZ=UTC jest --coverage",
+    "test:ci": "TZ=UTC jest",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
     "build": "npm run build:iife && npm run build:esm && npm run build:node",
