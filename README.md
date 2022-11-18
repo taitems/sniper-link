@@ -38,6 +38,28 @@ Subject to change while this script is in an alpha version. Currently it builds 
 - Web esm for React/Svelte etc `dist/web/esm.js`
 - Web IIFE for native and legacy js `dist/web/iife.js`
 
+#### Example
+
+A node.js example
+
+```js
+const buildUrl = require('sniper-link/dist/node');
+
+console.log(
+  buildUrl({
+    email: 'username@gmail.com',
+    from: '@userfront.com',
+    daysAgo: 1,
+  }),
+);
+
+// Logs the following
+// {
+//   provider: 'google',
+//   link: 'https://mail.google.com/mail/u/username@gmail.com/#search/from%3A(@userfront.com)+in%3Aanywhere'
+// }
+```
+
 ## Development
 
 Run either `npm run build` or `yarn build` to output to the `dist` folder
