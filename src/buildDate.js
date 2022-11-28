@@ -1,14 +1,20 @@
-const buildDate = (provider, daysAgo) => {
+/* eslint-disable no-underscore-dangle */
+const _getDaysAgo = (num) => new Date().setDate(new Date().getDate() - num);
+const _getHoursAgo = (num) => new Date().setHours(new Date().getHours() - num);
+
+const buildDate = (provider, daysAgo, hoursAgo) => {
   if (provider === 'google') {
-    return `+newer_than:${daysAgo}d`;
-  } if (provider === 'yahoo') {
-    const yahooDay = new Date(new Date().setDate(new Date().getDate() - daysAgo));
+    return hoursAgo ? `+newer_than:${hoursAgo}h` : `+newer_than:${daysAgo}d`;
+  }
+  if (provider === 'yahoo' && daysAgo) {
+    const yahooDay = new Date(_getDaysAgo(daysAgo));
     return ` after:"${yahooDay.toISOString().substr(0, 10)}"`;
-  } if (provider === 'proton') {
-    const protonDay = new Date(
-      new Date().setDate(new Date().getDate() - daysAgo),
-    ).setHours(0, 0, 0, 0);
-    const protonDatestamp = Math.round(protonDay.valueOf() / 1000);
+  }
+  if (provider === 'proton') {
+    const protonSince = hoursAgo
+      ? new Date(_getHoursAgo(hoursAgo))
+      : new Date(_getDaysAgo(daysAgo)).setHours(0, 0, 0, 0);
+    const protonDatestamp = Math.round(protonSince.valueOf() / 1000);
     return `&begin=${protonDatestamp}`;
   }
   return null;

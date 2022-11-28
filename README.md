@@ -18,10 +18,11 @@ What is a [sniper link](https://growth.design/sniper-link)? Let **growth.design*
 | From filter        | ✅    |         | ✅    | ✅     |        |
 | Spam piercer       | ✅    |         | ✅    | ✅     |        |
 | Time frame (days)  | ✅    |         | ✅    | ✅     |        |
-| Time frame (hours) | \*️⃣   |         |       | \*️⃣    |        |
+| Time frame (hours) | ✅    |         |       | ✅     |        |
 
 Legend:
 
+- ✅ = Supported by this provider and the script
 - \*️⃣ = Supported by the provider, but not by the script as yet
 
 ## Installation
@@ -37,6 +38,10 @@ Subject to change while this script is in an alpha version. Currently it builds 
 - A node version in `dist/node/index.js`
 - Web esm for React/Svelte etc `dist/web/esm.js`
 - Web IIFE for native and legacy js `dist/web/iife.js`
+
+#### Notes
+
+- You cannot use a combination of `daysAgo` and `hoursAgo`. If `hoursAgo` are specified, they will be used in preference.
 
 #### Example
 
