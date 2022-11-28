@@ -39,9 +39,18 @@ Subject to change while this script is in an alpha version. Currently it builds 
 - Web esm for React/Svelte etc `dist/web/esm.js`
 - Web IIFE for native and legacy js `dist/web/iife.js`
 
-#### Notes
+### Feature Support Table
+
+|                    | Expects         | Required? | Notes |
+| ------------------ | --------------- | --------- | ----- |
+| `email`            | String (email)  | ✅ Yes    | User's email inbox to search. |
+| `from`             | String          |           | Sender's email address. Can be an email, or partial match.      |
+| `forceProvider`    | String ('google', 'yahoo', 'microsoft', 'proton', 'icloud') |           | Optional override to skip email provider being detected from the provided string. Useful for when you already know `jessie@company.com` is using G-Suite under the hood, possibly via a MX lookup. |
+| `daysAgo`          | Number          |           | Sent within the last 'x' days      |
+| `hoursAgo`         | Number          |           | Sent within the last 'y' hours. See note below.       |
 
 - You cannot use a combination of `daysAgo` and `hoursAgo`. If `hoursAgo` are specified, they will be used in preference.
+- Yes, you could use `forceProvider` to make `lee@yahoo.com` to open `mail.google.com` -- that's on you.
 
 #### Example
 
@@ -65,6 +74,12 @@ console.log(
 // }
 ```
 
+## Roadmap
+
+- Return Android and iOS links with app protocols?
+- Add a subject/keyword filter (very low priority)?
+- Consider more popular [non-western email providers](https://www.quora.com/Who-are-the-top-5-email-providers-in-China-Are-there-any-stats-around-their-marketshare)
+
 ## Development
 
 Run either `npm run build` or `yarn build` to output to the `dist` folder
@@ -72,13 +87,6 @@ Run either `npm run build` or `yarn build` to output to the `dist` folder
 ## Testing
 
 Run `npm run test` or `yarn test` to run tests via Jest. `--watch` flag supported.
-
-## Roadmap
-
-- Support passing in the provider (eg: `google`) when a preflight check is done outside of this script and the engineer knows that `user@company.com` is using G-Suite, and should be sent to `gmail.com`
-- Return Android and iOS links with app protocols
-- An optional override to support `1h` window which would only work in Gmail and Proton, perhaps falling back to `1d` when not supported?
-- Add a subject/keyword filter (very low priority)
 
 ---
 

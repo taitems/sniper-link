@@ -11,14 +11,16 @@ const templates = {
 };
 
 const buildUrl = ({
-  email, from, daysAgo, hoursAgo,
+  email, forceProvider, from, daysAgo, hoursAgo,
 }) => {
-  const provider = emailToProvider(email);
+  const provider = forceProvider || emailToProvider(email);
   const dateString = (daysAgo || hoursAgo) && buildDate(provider, daysAgo, hoursAgo);
-  const link = templates[provider]
-    .replace('{USER_EMAIL}', email)
-    .replace('{FROM_EMAIL}', from)
-    .replace('{DATE}', dateString || '');
+  const link = provider
+    ? templates[provider]
+      .replace('{USER_EMAIL}', email)
+      .replace('{FROM_EMAIL}', from)
+      .replace('{DATE}', dateString || '')
+    : null;
   return {
     provider,
     link,
