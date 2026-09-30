@@ -37,7 +37,7 @@ Subject to change while this script is in an alpha version. Currently it builds 
 
 - A node version in `dist/node/index.js`
 - Web esm for React/Svelte etc `dist/web/esm.js`
-- Web IIFE for native and legacy js `dist/web/iife.js`
+- Web IIFE for native and legacy js `dist/web/iife.js`, exposed as `window.sniperLink`
 
 ### Feature Support Table
 
@@ -50,14 +50,16 @@ Subject to change while this script is in an alpha version. Currently it builds 
 | `hoursAgo`         | Number          |           | Sent within the last 'y' hours. See note below.       |
 
 - You cannot use a combination of `daysAgo` and `hoursAgo`. If `hoursAgo` are specified, they will be used in preference.
-- Yes, you could use `forceProvider` to make `lee@yahoo.com` to open `mail.google.com` -- that's on you.
+- Gmail's `newer_than:` operator has no hours unit, so `hoursAgo` is sent to Gmail as an `after:<unix timestamp>` filter instead.
+- Yes, you could use `forceProvider` to make `lee@yahoo.com` to open `mail.google.com` -- that's on you. An unrecognised `forceProvider` value throws an error.
+- Yahoo! Japan (`yahoo.co.jp`) is a separate service from Yahoo Mail, so it is intentionally not detected as `yahoo`.
 
 #### Example
 
 A node.js example
 
 ```js
-const buildUrl = require('sniper-link/dist/node');
+const buildUrl = require('sniper-link');
 
 console.log(
   buildUrl({
@@ -70,7 +72,7 @@ console.log(
 // Logs the following
 // {
 //   provider: 'google',
-//   link: 'https://mail.google.com/mail/u/username@gmail.com/#search/from%3A(@userfront.com)+in%3Aanywhere'
+//   link: 'https://mail.google.com/mail/u/username@gmail.com/#search/from%3A(%40userfront.com)+in%3Aanywhere+newer_than%3A1d'
 // }
 ```
 
