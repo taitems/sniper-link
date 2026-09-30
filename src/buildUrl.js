@@ -7,8 +7,9 @@ const compact = (items) => items.filter(Boolean);
 const templates = {
   google: ({ email, from, date }) => {
     const terms = compact([from && `from:(${from})`, 'in:anywhere', date]);
-    const account = email ? encode(email).replace('%40', '@') : '0';
-    return `https://mail.google.com/mail/u/${account}/#search/${terms.map(encode).join('+')}`;
+    // Gmail no longer accepts an email in the /u/<email>/ path; authuser selects the account
+    const account = email ? `?authuser=${encode(email).replace('%40', '@')}` : 'u/0/';
+    return `https://mail.google.com/mail/${account}#search/${terms.map(encode).join('+')}`;
   },
   microsoft: ({ email }) => `https://outlook.live.com/mail/${email ? `?login_hint=${encode(email)}` : ''}`,
   yahoo: ({ from, date }) => {

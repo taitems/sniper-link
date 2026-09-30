@@ -12,7 +12,7 @@ describe('url building for', () => {
       from: 'taitbrown@gmail.com',
       daysAgo: 20,
     });
-    expect(result.link).toBe('https://mail.google.com/mail/u/hello@gmail.com/#search/from%3A(taitbrown%40gmail.com)+in%3Aanywhere+newer_than%3A20d');
+    expect(result.link).toBe('https://mail.google.com/mail/?authuser=hello@gmail.com#search/from%3A(taitbrown%40gmail.com)+in%3Aanywhere+newer_than%3A20d');
   });
 
   test('gmail hours', () => {
@@ -23,12 +23,12 @@ describe('url building for', () => {
 
   test('gmail encodes plus-addressed accounts and special senders', () => {
     const result = buildUrl({ email: 'me+tag@gmail.com', from: 'a&b #co' });
-    expect(result.link).toBe('https://mail.google.com/mail/u/me%2Btag@gmail.com/#search/from%3A(a%26b%20%23co)+in%3Aanywhere');
+    expect(result.link).toBe('https://mail.google.com/mail/?authuser=me%2Btag@gmail.com#search/from%3A(a%26b%20%23co)+in%3Aanywhere');
   });
 
   test('gmail without from', () => {
     const result = buildUrl({ email: 'hello@gmail.com' });
-    expect(result.link).toBe('https://mail.google.com/mail/u/hello@gmail.com/#search/in%3Aanywhere');
+    expect(result.link).toBe('https://mail.google.com/mail/?authuser=hello@gmail.com#search/in%3Aanywhere');
   });
 
   test('outlook', () => {
@@ -76,8 +76,12 @@ describe('provider overriding', () => {
       hoursAgo: 3,
     });
     expect(result.provider).toBe('google');
-    expect(result.link).toContain('mail.google.com/mail/u/tait-brown@company.com/');
+    expect(result.link).toContain('mail.google.com/mail/?authuser=tait-brown@company.com#');
     expect(result.link).toContain('after%3A');
+  });
+  test('falls back to the first signed-in account without an email', () => {
+    const result = buildUrl({ forceProvider: 'google', from: '@userfront.com' });
+    expect(result.link).toBe('https://mail.google.com/mail/u/0/#search/from%3A(%40userfront.com)+in%3Aanywhere');
   });
   test('throws on an unknown provider', () => {
     expect(() => buildUrl({ email: 'a@b.com', forceProvider: 'gmail' })).toThrow('Unknown provider "gmail"');

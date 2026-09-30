@@ -72,7 +72,7 @@ console.log(
 // Logs the following
 // {
 //   provider: 'google',
-//   link: 'https://mail.google.com/mail/u/username@gmail.com/#search/from%3A(%40userfront.com)+in%3Aanywhere+newer_than%3A1d'
+//   link: 'https://mail.google.com/mail/?authuser=username@gmail.com#search/from%3A(%40userfront.com)+in%3Aanywhere+newer_than%3A1d'
 // }
 ```
 
