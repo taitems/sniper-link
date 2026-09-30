@@ -1,29 +1,42 @@
 const buildDate = require('./buildDate');
 const emailToProvider = require('./emailToProvider');
 
+const encode = encodeURIComponent;
+const compact = (items) => items.filter(Boolean);
+
 const templates = {
-  google:
-    'https://mail.google.com/mail/u/{USER_EMAIL}/#search/from%3A({FROM_EMAIL})+in%3Aanywhere{DATE}',
-  microsoft: 'https://outlook.live.com/mail/?login_hint={USER_EMAIL}',
-  yahoo: 'https://mail.yahoo.com/d/search/keyword=from%253A{FROM_EMAIL}{DATE}',
-  proton: 'https://mail.proton.me/u/0/all-mail#from={FROM_EMAIL}{DATE}',
-  icloud: 'https://www.icloud.com/mail/',
+  google: ({ email, from, date }) => {
+    const terms = compact([from && `from:(${from})`, 'in:anywhere', date]);
+    // Gmail no longer accepts an email in the /u/<email>/ path; authuser selects the account
+    const account = email ? `?authuser=${encode(email).replace('%40', '@')}` : 'u/0/';
+    return `https://mail.google.com/mail/${account}#search/${terms.map(encode).join('+')}`;
+  },
+  microsoft: ({ email }) => `https://outlook.live.com/mail/${email ? `?login_hint=${encode(email)}` : ''}`,
+  yahoo: ({ from, date }) => {
+    const query = compact([from && `from:${from}`, date]).join(' ');
+    // Yahoo expects the keyword double-encoded
+    return query
+      ? `https://mail.yahoo.com/d/search/keyword=${encode(encode(query))}`
+      : 'https://mail.yahoo.com/';
+  },
+  proton: ({ from, date }) => {
+    const params = compact([from && `from=${encode(from)}`, date]).join('&');
+    return `https://mail.proton.me/u/0/all-mail${params ? `#${params}` : ''}`;
+  },
+  icloud: () => 'https://www.icloud.com/mail/',
 };
 
 const buildUrl = ({
   email, forceProvider, from, daysAgo, hoursAgo,
-}) => {
+} = {}) => {
   const provider = forceProvider || emailToProvider(email);
-  const dateString = (daysAgo || hoursAgo) && buildDate(provider, daysAgo, hoursAgo);
-  const link = provider
-    ? templates[provider]
-      .replace('{USER_EMAIL}', email)
-      .replace('{FROM_EMAIL}', from)
-      .replace('{DATE}', dateString || '')
-    : null;
+  if (provider && !templates[provider]) {
+    throw Error(`Unknown provider "${provider}". Expected one of: ${Object.keys(templates).join(', ')}`);
+  }
+  const date = (daysAgo || hoursAgo) ? buildDate(provider, daysAgo, hoursAgo) : null;
   return {
     provider,
-    link,
+    link: provider ? templates[provider]({ email, from, date }) : null,
   };
 };
 
