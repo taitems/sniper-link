@@ -1,5 +1,6 @@
 const buildDate = require('./buildDate');
 const emailToProvider = require('./emailToProvider');
+const inboxProviders = require('./inboxProviders');
 
 const encode = encodeURIComponent;
 const compact = (items) => items.filter(Boolean);
@@ -25,6 +26,14 @@ const templates = {
   },
   icloud: () => 'https://www.icloud.com/mail/',
 };
+
+Object.keys(inboxProviders).forEach((provider) => {
+  const { inbox, regional = {} } = inboxProviders[provider];
+  templates[provider] = ({ email }) => {
+    const domain = (email || '').split('@').pop().trim().toLowerCase();
+    return regional[domain] || inbox;
+  };
+});
 
 const buildUrl = ({
   email, forceProvider, from, daysAgo, hoursAgo,
