@@ -48,5 +48,5 @@ test('Does not match lookalike or unrelated domains', () => {
   expect(emailToProvider('gmail.com')).toBe(null);
 });
 test('Yahoo! Japan is not treated as Yahoo', () => {
-  expect(emailToProvider('hello@yahoo.co.jp')).toBe(null);
+  expect(emailToProvider('hello@yahoo.co.jp')).toBe('yahoojapan');
 });

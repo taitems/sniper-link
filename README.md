@@ -25,6 +25,36 @@ Legend:
 - ✅ = Supported by this provider and the script
 - \*️⃣ = Supported by the provider, but not by the script as yet
 
+### Inbox-only providers
+
+These providers are detected, but they have no known search deep link, so the link opens the webmail inbox and `from`, `daysAgo` and `hoursAgo` are ignored. Help confirm them in [issue #12](https://github.com/taitems/sniper-link/issues/12).
+
+| Provider | `forceProvider` | Domains |
+| -------- | --------------- | ------- |
+| AOL | `aol` | `aol.com`, `aim.com`, `aol.co.uk` |
+| Fastmail | `fastmail` | `fastmail.com`, `fastmail.fm` |
+| GMX | `gmx` | `gmx.net`, `gmx.de`, `gmx.at`, `gmx.ch`, `gmx.com`, `gmx.us`, `gmx.co.uk`, `gmx.fr`, `gmx.es` |
+| WEB.DE | `webde` | `web.de` |
+| Zoho Mail | `zoho` | `zoho.com`, `zohomail.com`, `zoho.eu`, `zohomail.eu`, `zohomail.in` |
+| Mail.com | `mailcom` | `mail.com`, `email.com`, `usa.com` |
+| Orange | `orange` | `orange.fr`, `wanadoo.fr` |
+| Free | `free` | `free.fr` |
+| La Poste | `laposte` | `laposte.net` |
+| WP Poczta | `wp` | `wp.pl` |
+| Onet Poczta | `onet` | `onet.pl`, `op.pl`, `onet.eu`, `vp.pl` |
+| Interia Poczta | `interia` | `interia.pl`, `interia.eu`, `poczta.fm` |
+| Seznam | `seznam` | `seznam.cz`, `email.cz`, `post.cz` |
+| Tuta | `tuta` | `tuta.com`, `tuta.io`, `tutanota.com`, `tutanota.de`, `tutamail.com`, `keemail.me` |
+| QQ Mail | `qq` | `qq.com`, `vip.qq.com`, `foxmail.com` |
+| NetEase | `netease` | `163.com`, `126.com`, `yeah.net` |
+| Sina Mail | `sina` | `sina.com`, `sina.cn` |
+| Sohu Mail | `sohu` | `sohu.com` |
+| Aliyun Mail | `aliyun` | `aliyun.com` |
+| Naver Mail | `naver` | `naver.com` |
+| Daum / Hanmail | `daum` | `daum.net`, `hanmail.net` |
+| Yahoo! Japan | `yahoojapan` | `yahoo.co.jp`, `ymail.ne.jp` |
+| Rediffmail | `rediff` | `rediffmail.com` |
+
 ## Installation
 
 Using the node package manager of your choice, either
@@ -45,14 +75,14 @@ Subject to change while this script is in an alpha version. Currently it builds 
 | ------------------ | --------------- | --------- | ----- |
 | `email`            | String (email)  | ✅ Yes    | User's email inbox to search. |
 | `from`             | String          |           | Sender's email address. Can be an email, or partial match.      |
-| `forceProvider`    | String ('google', 'yahoo', 'microsoft', 'proton', 'icloud') |           | Optional override to skip email provider being detected from the provided string. Useful for when you already know `jessie@company.com` is using G-Suite under the hood, possibly via a MX lookup. |
+| `forceProvider`    | String ('google', 'yahoo', 'microsoft', 'proton', 'icloud', or any inbox-only provider key) |           | Optional override to skip email provider being detected from the provided string. Useful for when you already know `jessie@company.com` is using G-Suite under the hood, possibly via a MX lookup. |
 | `daysAgo`          | Number          |           | Sent within the last 'x' days      |
 | `hoursAgo`         | Number          |           | Sent within the last 'y' hours. See note below.       |
 
 - You cannot use a combination of `daysAgo` and `hoursAgo`. If `hoursAgo` are specified, they will be used in preference.
 - Gmail's `newer_than:` operator has no hours unit, so `hoursAgo` is sent to Gmail as an `after:<unix timestamp>` filter instead.
 - Yes, you could use `forceProvider` to make `lee@yahoo.com` to open `mail.google.com` -- that's on you. An unrecognised `forceProvider` value throws an error.
-- Yahoo! Japan (`yahoo.co.jp`) is a separate service from Yahoo Mail, so it is intentionally not detected as `yahoo`.
+- Yahoo! Japan (`yahoo.co.jp`) is a separate service from Yahoo Mail, so it is detected as `yahoojapan`, not `yahoo`.
 
 #### Example
 
@@ -80,7 +110,7 @@ console.log(
 
 - Return Android and iOS links with app protocols?
 - Add a subject/keyword filter (very low priority)?
-- Consider more popular [non-western email providers](https://www.quora.com/Who-are-the-top-5-email-providers-in-China-Are-there-any-stats-around-their-marketshare)
+- Add search deep links for inbox-only providers once they're confirmed
 
 ## Development
 

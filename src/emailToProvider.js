@@ -1,3 +1,5 @@
+const inboxProviders = require('./inboxProviders');
+
 const providers = {
   google: /^(gmail|googlemail|google)\.com$/,
   // Regional Yahoo domains, excluding yahoo.co.jp (Yahoo! Japan is a separate service)
@@ -15,7 +17,9 @@ const emailToProvider = (email) => {
     return null;
   }
   const domain = email.split('@').pop().trim().toLowerCase();
-  const match = Object.keys(providers).find((provider) => providers[provider].test(domain));
+  const match = Object.keys(providers).find((provider) => providers[provider].test(domain))
+    || Object.keys(inboxProviders)
+      .find((provider) => inboxProviders[provider].domains.includes(domain));
   return match || null;
 };
 
